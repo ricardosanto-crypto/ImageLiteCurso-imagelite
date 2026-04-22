@@ -7,8 +7,10 @@ interface PrimeiroComponentProps{
 }
 
 //export function PrimeiroComponent(){} //Até Aula 29
-  
-//converti em arroyfunction utilizando o props
+
+
+//converti em arroyfunction utilizando o props  (arroyfunction é tirar o function e usar o const + :Ract.FC...)
+//Primeiro componente
 export const PrimeiroComponent:React.FC<PrimeiroComponentProps> = (props:PrimeiroComponentProps) =>{
     function handleClick(){        
         console.log(props.mensagemDoBotao );
@@ -22,10 +24,11 @@ export const PrimeiroComponent:React.FC<PrimeiroComponentProps> = (props:Primeir
     )
 }
 
-
+//Segundo componente
 export const ArrowFunction = ()=>{
     return (
         <h2>Arrow Function</h2>        
     )
 
 }
+
