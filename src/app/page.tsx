@@ -1,6 +1,10 @@
-import {PrimeiroComponent} from "../components/PrimeiroComponent";
+import { ArrowFunction, PrimeiroComponent } from "../components/PrimeiroComponent";
 export default function Home() {
   return (
-    <PrimeiroComponent />
+    <div>
+      <PrimeiroComponent />
+      <ArrowFunction />
+    </div>
+
   )
 }
