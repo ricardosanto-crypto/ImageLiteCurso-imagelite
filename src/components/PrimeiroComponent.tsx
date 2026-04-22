@@ -25,7 +25,7 @@ export const PrimeiroComponent:React.FC<PrimeiroComponentProps> = (props:Primeir
 
 export const ArrowFunction = ()=>{
     return (
-        <h2>Arrow Function</h2>
+        <h2>Arrow Function</h2>        
     )
 
 }
