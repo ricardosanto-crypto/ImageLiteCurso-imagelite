@@ -1,11 +1,13 @@
 'use client'
 
 import{ Template, ImageCard } from "@/components";
+import {Image} from '@/resources/image/image.resource';
+import {useImageService} from '@/resources/image/image.service';
 import{useState} from 'react';
 
 export default function GaleriaPage(){
 
-    const image1 = "https://images.unsplash.com/photo-1768489002497-12453d8cfe5a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";    
+    /*const image1 = "https://images.unsplash.com/photo-1768489002497-12453d8cfe5a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";    
     const image2 = "https://plus.unsplash.com/premium_photo-1701764128909-68204034c453?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
     const image3 = "https://kennydouglas.com.br/wp-content/uploads/2024/01/fotos-de-paisagens.webp";
     
@@ -15,10 +17,10 @@ export default function GaleriaPage(){
     const [tamanhoImage, setTamanhoImage] = useState<number>();
     const [dataUploadImage, setDataUploadImage] = useState<string>();
 
-    /*const image = useState<string>();    
-    const valor = image[0];
-    const setValor = image[1];
-    setValor("função para modificar valor do estado");*/
+    //const image = useState<string>();    
+    //const valor = image[0];
+    //const setValor = image[1];
+    //setValor("função para modificar valor do estado");
     
     function mudarImagem(){
         if (codigoImage === 1){
@@ -35,14 +37,31 @@ export default function GaleriaPage(){
             setDataUploadImage("23/04/2024");
         }
     }
-
     return (
        <Template>
-            <section className="grid grid-cols-3 gap-8">   
-                <button onClick={mudarImagem}>Clique para mudar</button>             
+            <button onClick={mudarImagem}>Clique para mudar</button>   
+            <section className="grid grid-cols-3 gap-8">                             
                 <ImageCard nome={nomeImage} tamanho={tamanhoImage?.toString() + 'MB'} dataUpload={dataUploadImage} src={urlImage} className='h-56 w-full object-cover rounded-t-md'/>                           
                 <ImageCard nome={nomeImage} tamanho={tamanhoImage?.toString() + 'MB'} dataUpload={dataUploadImage} src={urlImage} className='h-56 w-full object-cover rounded-t-md'/>                           
                 <ImageCard nome={nomeImage} tamanho={tamanhoImage?.toString() + 'MB'} dataUpload={dataUploadImage} src={urlImage} className='h-56 w-full object-cover rounded-t-md'/>                           
+            </section>  
+       </Template>
+    )*/
+
+    const useService = useImageService();
+    const [images, setImages] = useState<Image[]>([])
+    
+    async function searchImages(){
+        const result = await useService.buscar();
+        setImages(result);
+        console.table(result);
+    }
+
+    return (
+       <Template>     
+            <section className="grid grid-cols-3 gap-8">                          
+                <button onClick={searchImages}>Clique para mudar</button>                 
+                <ImageCard nome="nome_iamgem" tamanho="10MB" dataUpload='24/04/2026' src="https://images.unsplash.com/photo-1768489002497-12453d8cfe5a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className='h-56 w-full object-cover rounded-t-md'/>                           
             </section>  
        </Template>
     )

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "debug": "node --inspect-brk -r ts-node/register src/main.ts"
   },
   "dependencies": {
     "next": "16.2.1",
