@@ -56,12 +56,29 @@ export default function GaleriaPage(){
         setImages(result);
         console.table(result);
     }
+        
+    function renderImageCard(image:Image){
+        return (
+            <ImageCard  nome={image.name} 
+                        src={image.url} 
+                        tamanho={image.size} 
+                        dataUpload={image.uploadDate}/> 
+            //<ImageCard nome="nome_iamgem" tamanho="10MB" dataUpload='24/04/2026' src="https://images.unsplash.com/photo-1768489002497-12453d8cfe5a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className='h-56 w-full object-cover rounded-t-md'/>                           
+        )
+    }
+
+    function renderImageCards(){
+        //return images.map(image => image.name);
+        return images.map(renderImageCard);
+    }    
 
     return (
        <Template>     
-            <section className="grid grid-cols-3 gap-8">                          
-                <button onClick={searchImages}>Clique para mudar</button>                 
-                <ImageCard nome="nome_iamgem" tamanho="10MB" dataUpload='24/04/2026' src="https://images.unsplash.com/photo-1768489002497-12453d8cfe5a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className='h-56 w-full object-cover rounded-t-md'/>                           
+            <button className='bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded' onClick={searchImages}>Clique para mudar</button>                 
+            <section className="grid grid-cols-3 gap-8">                                                  
+              {
+                renderImageCards()
+              }
             </section>  
        </Template>
     )
