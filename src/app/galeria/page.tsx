@@ -92,7 +92,6 @@ export default function GaleriaPage() {
                         <option value="jpeg">JPEG</option>
                         <option value="png">PNG</option>
                         <option value="gif">GIF</option>
-                        <option value="webp">WEBP</option>
                     </select>
                     <button className="bg-blue-500 text-white py-2 px-4 rounded-1g" onClick={searchImages}>Search</button>
                     <button className="bg-yellow-500 text-white py-2 px-4 rounded-1g">Add New</button>
