@@ -52,12 +52,15 @@ export default function GaleriaPage() {
     const [images, setImages] = useState<Image[]>([])
     const [query, setQuery] = useState<string>('');
     const [extension, setExtension] = useState<string>('');
+    const  [loading, setLoading] = useState<boolean>(false);
 
     async function searchImages() {
+        setLoading(true);
         console.log("valor digitado: ", query);
         console.log("extensão digitada: ", extension);
         const result = await useService.buscar(query, extension);
         setImages(result);
+        setLoading(false);
         //console.table(result);
     }
 
@@ -68,7 +71,7 @@ export default function GaleriaPage() {
                 nome={image.name}
                 src={image.url}
                 tamanho={image.size}
-                dateUpload={image.upload} 
+                dateUpload={image.upload?.toString()} 
                 extension={image.extension}
                 />
             //<ImageCard nome="nome_iamgem" tamanho="10MB" dataUpload='24/04/2026' src="https://images.unsplash.com/photo-1768489002497-12453d8cfe5a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className='h-56 w-full object-cover rounded-t-md'/>                           
@@ -82,7 +85,7 @@ export default function GaleriaPage() {
     }
 
     return (
-        <Template>
+        <Template loading={loading}>
             <section className="flex flex-col items-center justify-center my-5">
                 <div className="fles space-x-4">
                     <input type="text"
@@ -95,8 +98,8 @@ export default function GaleriaPage() {
                         <option value="png">PNG</option>
                         <option value="gif">GIF</option>
                     </select>
-                    <button className="bg-blue-500 text-white py-2 px-4 rounded-1g" onClick={searchImages}>Search</button>
-                    <button className="bg-yellow-500 text-white py-2 px-4 rounded-1g">Add New</button>
+                    <button className="bg-blue-500 text-white py-2 px-4 rounded-1g rounded-lg hover:bg-blue-300" onClick={searchImages}>Search</button>
+                    <button className="bg-yellow-500 text-white py-2 px-4 rounded-1g rounded-lg hover:bg-yellow-300">Add New</button>
                 </div>
             </section>
             <section className="grid grid-cols-3 gap-8">
