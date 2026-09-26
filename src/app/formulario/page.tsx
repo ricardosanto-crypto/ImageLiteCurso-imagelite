@@ -1,5 +1,6 @@
 'use client'
 import { Button, InputText, Template, RenderIf } from "@/components";
+import { useImageService } from "@/resources/image/image.service";
 import Link from "next/link";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -7,24 +8,48 @@ import { useState } from "react";
 interface FormProps {
     name: string;
     tags: string;
-    image: File | null;
+    file: any;
 }
 
 const formScheme: FormProps = {
     name: '',
     tags: '',
-    image: null
+    file: ''
 };
 
 export default function FormularioPage() {
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imagePreview, setImagePreview] = useState<string>('');
+    const service = useImageService();
 
     const formik = useFormik<FormProps>({
         initialValues: formScheme,
+        // onSubmit: (dados: FormProps) => {
+        //     console.log("dados do formulário: ", dados);
+        // }
         onSubmit: (dados: FormProps) => {
-            console.log("dados do formulário: ", dados);
+            handleSubmit(dados);
         }
     });
+
+    async function handleSubmit(dados: FormProps) {
+        const formData = new FormData();
+        formData.append("name", dados.name);
+        formData.append("tags", dados.tags);
+        formData.append("file", dados.file); // O "!" indica que o valor não é nulo
+
+        await service.salvar(formData)
+            .then(location => {
+                console.log("Imagem salva com sucesso! Location: ", location);
+            })
+            .catch(error => {
+                console.error("Erro ao salvar a imagem: ", error);
+            });
+
+        formik.resetForm();
+        setImagePreview('');
+
+
+    }
 
     function onFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
         if (event.target.files && event.target.files.length > 0) {
