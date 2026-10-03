@@ -1,6 +1,6 @@
 'use client'
 
-import { Template, ImageCard, Button, InputText } from "@/components";
+import { Template, ImageCard, Button, InputText, useNotification } from "@/components";
 import { Image } from '@/resources/image/image.resource';
 import { useImageService } from '@/resources/image/image.service';
 import { useState } from 'react';
@@ -50,10 +50,12 @@ export default function GaleriaPage() {
     )*/
 
     const useService = useImageService();
+    const notification  = useNotification();
     const [images, setImages] = useState<Image[]>([])
     const [query, setQuery] = useState<string>('');
     const [extension, setExtension] = useState<string>('');
     const  [loading, setLoading] = useState<boolean>(false);
+
 
     async function searchImages() {
         setLoading(true);
@@ -63,6 +65,10 @@ export default function GaleriaPage() {
         setImages(result);
         setLoading(false);
         //console.table(result);
+
+        if (!result.length) {
+            notification.notify("Nenhuma imagem encontrada.", "warning");
+        }
     }
 
     function renderImageCard(image: Image) {
