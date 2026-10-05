@@ -4,18 +4,7 @@ import { useImageService } from "@/resources/image/image.service";
 import Link from "next/link";
 import { useFormik } from "formik";
 import { useState } from "react";
-
-interface FormProps {
-    name: string;
-    tags: string;
-    file: any;
-}
-
-const formScheme: FormProps = {
-    name: '',
-    tags: '',
-    file: ''
-};
+import { FormProps, formScheme, formValidationSchema } from "./formScheme";
 
 export default function FormularioPage() {
     const [loding, setLoading] = useState<boolean>(false);
@@ -28,9 +17,11 @@ export default function FormularioPage() {
         // onSubmit: (dados: FormProps) => {
         //     console.log("dados do formulário: ", dados);
         // }
-        onSubmit: (dados: FormProps) => {
-            handleSubmit(dados);
-        }
+        // onSubmit: (dados: FormProps) => {
+        //     handleSubmit(dados);
+        // }
+        onSubmit: handleSubmit,
+        validationSchema: formValidationSchema
     });
 
     async function handleSubmit(dados: FormProps) {
@@ -78,6 +69,7 @@ export default function FormularioPage() {
                             onChange={formik.handleChange}
                             value={formik.values.name}
                             placeholder="type the image's name" />
+                            <span className="text-red-500">{formik.errors.name}</span>
                     </div>
                     <div className="mt-5 grid grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-700">Tags: *</label>
