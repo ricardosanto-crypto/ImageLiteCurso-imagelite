@@ -1,18 +1,18 @@
 'use client'
 
-import { Template, RenderIf, InputText } from "@/components"
+import { Template, RenderIf, InputText, Button } from "@/components"
 import { useState } from "react"
 
 export default function Login() {
     const [loading, setLoading] = useState<boolean>(false);
-    const [newUserState, setNewUserState] = useState<boolean>(true);
+    const [newUserState, setNewUserState] = useState<boolean>(false);
     return (
         <Template loading={loading}>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        {newUserState ? "Create an account" : "Sign in to your account"}
+                        {newUserState ? "Create new User" : "Login to your account"}
                     </h2>
                 </div>
                 <div className="mt-10sm:mx-auto sm:w-full sm:max-w-sm">
@@ -42,27 +42,41 @@ export default function Login() {
                             </div>
                         </div>
                         <RenderIf condition={newUserState}>
-                        <div>
-                            <label className="block text-sm font-medium leading-6 text-gray-900">Repeat Password:</label>
-                            <div className="mt-2">
-                                <InputText style="w-full"
-                                    type="password"
-                                    id="repeatPassword" />
+                            <div>
+                                <label className="block text-sm font-medium leading-6 text-gray-900">Repeat Password:</label>
+                                <div className="mt-2">
+                                    <InputText style="w-full"
+                                        type="password"
+                                        id="repeatPassword" />
+                                </div>
                             </div>
-                        </div>
-                    </RenderIf>
-                    <div>
-                        <button
-                            type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
-                        >
-                            Sign in
-                        </button>
-                    </div>
-                </form>
-            </div>
+                        </RenderIf>
 
-        </div>
+                        <div>
+                            <RenderIf condition={newUserState}>
+                                <Button type='submit' 
+                                        style='bg-indigo-700 
+                                        hover:bg-indigo-500' 
+                                        label='Save' />
+                                <Button type='button' 
+                                        style='bg-red-700 
+                                        hover:bg-red-500 mx-2' 
+                                        label='Cancel' 
+                                        onClick={() => setNewUserState(false)} />
+                            </RenderIf>
+                            <RenderIf condition={!newUserState}>
+                                <Button type='submit' 
+                                        style='bg-indigo-700 hover:bg-indigo-500' 
+                                        label='Login' />
+                                <Button type='button' 
+                                        style='bg-red-700 hover:bg-red-500 mx-2' 
+                                        label='Sign Up' 
+                                        onClick={() => setNewUserState(true)} />
+                            </RenderIf>                     
+                        </div>
+                    </form>
+                </div>
+            </div>
         </Template >
     )
 }
