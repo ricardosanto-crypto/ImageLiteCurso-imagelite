@@ -1,7 +1,7 @@
 import {AccessToken, Credentials, User, UserSessionToken} from './user.resources'
 
 class AuthService {
-    baseURL: string = 'http://localhost:8080/api/v1/users';
+    baseURL: string = 'http://localhost:8080/v1/users';
     static AUTH_PARAM: string = "_auth";
 
     async authenticate(credentials: Credentials): Promise<AccessToken> {
@@ -21,4 +21,6 @@ class AuthService {
     }
 }
 
-export const userAuth = new AuthService();
+export const useAuth = () => {
+    return new AuthService();
+};

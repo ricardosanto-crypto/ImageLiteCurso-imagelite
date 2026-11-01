@@ -1,13 +1,20 @@
 'use client'
 
-import { Template, RenderIf, InputText, Button, FieldError } from "@/components"
+import { Template, RenderIf, InputText, Button, FieldError, useNotification } from "@/components"
 import { useState } from "react"
 import { LoginForm, formScheme, validationScheme } from "./formScheme"
 import { useFormik } from "formik"
+import { useAuth } from "@/resources"
+import { useRouter } from "next/navigation"
+import { AccessToken } from "@/resources/user/user.resources"
 
 export default function Login() {
     const [loading, setLoading] = useState<boolean>(false);
     const [newUserState, setNewUserState] = useState<boolean>(false);
+
+    const auth = useAuth();
+    const notification = useNotification();
+    const router = useRouter();
 
     const { handleSubmit, handleChange, values, errors } = useFormik<LoginForm>({
         initialValues: formScheme,
@@ -16,7 +23,20 @@ export default function Login() {
     })
 
     async function onSubmit(values: LoginForm){    
-        console.log(values);
+       if (!newUserState){
+            const credentials = {
+                email: values.email,
+                password: values.password
+            }
+            try {
+                const accessToken: AccessToken = await auth.authenticate(credentials);
+                router.push("/galeria");               
+            }catch (error: any) {
+                const message = error?.message || "An error occurred while trying to login. Please try again later.";
+                notification.notify(message, "error");
+                
+            }
+       }
     }
 
     return (
